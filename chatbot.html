@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
   <title>Student Chatbot</title>
@@ -8,37 +8,64 @@
 
 <body>
 
-  <!-- TOP BAR -->
-  <div class="top-bar">
-
-    <div class="left">
-
-      <div class="logo">
-        <img src="assets/logo.png" alt="Logo">
-      </div>
-
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="status-dot"></div>
+      <div class="top-icon">📄</div>
+      <div class="top-label">Student view</div>
+    </div>
+    <div class="top-center">
       <select class="dropdown">
         <option>Class 1</option>
+        <option>Class 2</option>
+        <option>Class 3</option>
       </select>
-
     </div>
-
-    <div class="profile">
-      <img src="assets/profile.png" alt="Profile">
-      <span>Alex Borstein</span>
+    <div class="top-right">
+      <img src="assets/profile.png" alt="Profile" class="profile-avatar">
+      <span class="profile-name">Alex Borstein</span>
     </div>
+  </header>
 
+  <div class="container">
+    <aside class="sidebar">
+      <nav>
+        <a href="index.html" class="nav-item">
+          <span class="nav-icon home-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 11L12 3l9 8v8a1 1 0 0 1-1 1h-5v-5H9v5H4a1 1 0 0 1-1-1v-8Z" />
+            </svg>
+          </span>
+          Home
+        </a>
+        <a href="chatbot.html" class="nav-item active">
+          <span class="nav-icon">💬</span>
+          Chatbot
+        </a>
+        <a href="resources.html" class="nav-item">
+          <span class="nav-icon">📚</span>
+          Resources
+        </a>
+        <a href="settings.html" class="nav-item">
+          <span class="nav-icon">⚙️</span>
+          Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="add-button">+</button>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="page-intro">
+        <h1>Chatbot</h1>
+        <p>Ask questions, get instant study help, and explore lessons with your AI assistant.</p>
+      </div>
+      <article class="card">
+        <div class="card-title">AI Help Center</div>
+        <p class="card-text">Type in your question and let the chatbot guide you through assignments, classroom topics, and learning tips.</p>
+      </article>
+    </main>
   </div>
 
-  <!-- MAIN LAYOUT -->
-  <div class="container">
-
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-
-      <a href="index.html" class="active">🏠 Home</a> <!-- Abdelkerim add the logs here, make sure no background of logos-->
-      <a href="chatbot.html">💬 Chatbot</a>
-      <a href="resources.html">📚 Resources</a>
-      <a href="settings.html">⚙️ Settings</a>
-
-    </div>
+</body>
+</html>
