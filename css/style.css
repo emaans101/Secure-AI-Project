@@ -188,16 +188,11 @@ nav {
 
 
 .content {
-  padding: 22px 22px 30px 22px;
-}
-
-
-.content {
-  padding: 22px 22px 30px 22px;
+  padding: 20px 20px 28px;
 }
 
 .page-intro {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .page-intro h1 {
@@ -214,21 +209,21 @@ nav {
 }
 
 .card-text {
-  margin: 14px 0 0;
+  margin: 12px 0 0;
   color: #475569;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .dashboard-grid {
   display: grid;
-  gap: 30px;
+  gap: 22px;
   grid-template-columns: 1.1fr 1fr;
 }
 
 .summary-cards,
 .side-cards {
   display: grid;
-  gap: 26px;
+  gap: 18px;
 }
 
 .summary-cards {
@@ -237,9 +232,9 @@ nav {
 
 .card {
   background: white;
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
 }
 
 .card-title {
