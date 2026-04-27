@@ -26,10 +26,12 @@
   border-radius: 999px 999px 0 0;
   background: conic-gradient(
     from 180deg at 50% 100%,
-    #e9ecf6 0deg,
-    #e9ecf6 36deg,
-    #16a34a 36deg,
-    #15803d 60deg,
+    #166534 0deg,
+    #22c55e 42deg,
+    #86efac 90deg,
+    #22c55e 138deg,
+    #166534 176.4deg,
+    #e9ecf6 176.4deg,
     #e9ecf6 180deg
   );
 }
@@ -418,8 +420,34 @@
   gap: 6px;
 }
 
+.leader-top-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .leaderboard-top-copy strong {
   font-size: 20px;
+}
+
+.champion-medal {
+  width: 30px;
+  height: 30px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fde68a, #f59e0b 68%, #b45309 100%);
+  box-shadow: 0 4px 10px rgba(180, 83, 9, 0.28), inset 0 0 0 2px rgba(255, 255, 255, 0.45);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.champion-medal.mini {
+  width: 22px;
+  height: 22px;
+  font-size: 12px;
+  box-shadow: 0 3px 8px rgba(180, 83, 9, 0.24), inset 0 0 0 1.5px rgba(255, 255, 255, 0.45);
 }
 
 .leaderboard-top-copy span {
@@ -445,8 +473,8 @@
 }
 
 .leader-first {
-  background: #f0fdf4;
-  box-shadow: inset 0 0 0 1px rgba(34, 197, 94, 0.18);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%);
+  box-shadow: inset 0 0 0 1px rgba(34, 197, 94, 0.2);
 }
 
 .leader-rank {
@@ -472,6 +500,13 @@
   gap: 4px;
 }
 
+.leader-name-with-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .leader-student strong {
   font-size: 15px;
   color: #0f172a;
@@ -488,11 +523,12 @@
   min-width: 48px;
   padding: 10px 0;
   border-radius: 14px;
-  background: #f1f5f9;
+  background: linear-gradient(180deg, #f8fafc, #e2e8f0);
   text-align: center;
   font-size: 20px;
   font-weight: 800;
   color: #0f172a;
+  box-shadow: inset 0 0 0 1px #dbe4ef;
 }
 
 .leaderboard-summary-card {
@@ -610,36 +646,55 @@
 .time-graph-chart {
   display: flex;
   align-items: flex-end;
-  gap: 5px;
+  gap: 8px;
   margin-top: 20px;
-  min-height: 180px;
-  padding: 16px 8px 8px;
-  background: #f8fafc;
-  border-radius: 16px;
+  min-height: 196px;
+  padding: 20px 14px 30px;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  overflow-x: auto;
 }
 
 .day-bar {
-  flex: 1;
+  flex: 1 1 16px;
+  min-width: 16px;
   min-height: 40px;
-  border-radius: 12px 12px 0 0;
-  background: #cbd5e1;
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(180deg, #93c5fd, #60a5fa);
   position: relative;
+  box-shadow: 0 6px 14px rgba(96, 165, 250, 0.18);
 }
 
 .day-bar.weekend {
-  background: #e0e7ff;
+  background: linear-gradient(180deg, #c4b5fd, #a78bfa);
+  box-shadow: 0 6px 14px rgba(167, 139, 250, 0.2);
+}
+
+.day-bar:nth-child(7n) {
+  margin-right: 10px;
+}
+
+.day-bar:last-child {
+  margin-right: 0;
 }
 
 .day-bar span {
   position: absolute;
-  top: 6px;
+  bottom: -22px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
-  color: #0f172a;
-  width: 100%;
+  color: #475569;
+  width: max-content;
   text-align: center;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.day-bar:hover span {
+  opacity: 1;
 }
 
 .time-graph-footer {
@@ -741,7 +796,7 @@
 
 .due-text {
   font-size: 15px;
-  color: #334155;
+  color: #ef4444;
   line-height: 1.7;
 }
 
