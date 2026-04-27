@@ -264,7 +264,18 @@ nav {
 .dashboard-grid {
   display: grid;
   gap: 22px;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(260px, 0.9fr);
+  grid-template-areas:
+    "progress rings topics"
+    "graph graph assignment"
+    "search search side"
+    "subject study side";
+  align-items: start;
+}
+
+.dashboard-grid > .card,
+.dashboard-grid > .side-cards {
+  height: 100%;
 }
 
 .summary-cards,

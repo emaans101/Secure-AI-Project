@@ -7,100 +7,6 @@
   <link rel="icon" type="image/png" href="assets/logo.png">
 </head>
 
-<script>
-const tutorState = {
-    currentTopic: null,
-    hasAttempt: false
-};
-
-function sendMessage() {
-    let input = document.getElementById("userInput");
-    let message = input.value.trim();
-    if (message === "") return;
-
-    appendMessage("user", message);
-    input.value = "";
-
-    setTimeout(() => {
-        appendMessage("bot", generateSocraticReply(message));
-    }, 250);
-}
-
-function appendMessage(role, text) {
-    let chat = document.getElementById("chatMessages");
-    let msg = document.createElement("div");
-    msg.className = role;
-    msg.innerText = text;
-    chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
-}
-
-function generateSocraticReply(text) {
-    let normalized = text.toLowerCase();
-    let detectedTopic = extractTopic(normalized);
-    let topic = detectedTopic || tutorState.currentTopic;
-    let hasAttempt = detectAttempt(normalized);
-    let asksForHelp = /\b(stuck|don't understand|dont understand|can't|cant|help me|how do i|how do we|why|what is|explain|solve|answer)\b/.test(normalized);
-    let lowEffortUncertainty = /\b(i'm not sure|im not sure|i'm lost|im lost|i don't know|idk|not sure)\b/.test(normalized);
-
-    if (detectedTopic) {
-        tutorState.currentTopic = detectedTopic;
-    }
-
-    if (hasAttempt) {
-        tutorState.hasAttempt = true;
-    }
-
-    if (/\b(hello|hi|hey|good morning|good afternoon|good evening)\b/.test(normalized)) {
-        return "Hi! What topic are you working on today? Try sharing what you think the answer might be or the step you already tried.";
-    }
-
-    if (/\b(thank|thanks|great|ok|okay|nice)\b/.test(normalized)) {
-        return "You’re welcome! Is there another step you want to explore or another topic you'd like to review?";
-    }
-
-    if ((asksForHelp || lowEffortUncertainty) && !tutorState.hasAttempt) {
-        if (topic) {
-            return `Before I help with ${topic}, show me your own attempt first. What answer did you try, or what first step have you already taken?`;
-        }
-        return "Show me your own attempt first. Tell me the topic, what answer you tried, or the first step you worked on.";
-    }
-
-    if (hasAttempt) {
-        if (topic) {
-            return `Nice, that gives us something to work with for ${topic}. Which part of your attempt feels strongest, and where do you think it starts to go off track?`;
-        }
-        return "Good, now we have an attempt to build from. Which step felt right, and where did you start getting stuck?";
-    }
-
-    if (/\b(i know|i understand|i think|i learned|i remember|i believe)\b/.test(normalized)) {
-        if (topic) {
-            return `That’s a useful start for ${topic}. What step would you try next before asking for the full explanation?`;
-        }
-        return "That’s a useful start. What step would you try next before asking for the full explanation?";
-    }
-
-    return topic
-        ? `What have you tried so far for ${topic}? I’ll jump in once you show me a step or an answer you already worked on.`
-        : "Tell me the topic and show me a step, idea, or answer you already tried so I can guide you from there.";
-}
-
-function extractTopic(text) {
-    let topics = ["pythagorean theorem", "triangle", "equation", "grammar", "essay", "photosynthesis", "algebra", "history", "chemistry", "fractions"];
-    for (let topic of topics) {
-        if (text.includes(topic)) return topic;
-    }
-    let match = text.match(/\b(on|about|with|in) ([a-z ]+)\b/);
-    return match ? match[2].trim() : null;
-}
-
-function detectAttempt(text) {
-    return /\b(i tried|i think|my answer|my attempt|i got|i used|i solved|i wrote|i worked out|i calculated|i started|first i|i know|i believe|i found|i did)\b/.test(text)
-        || /\d/.test(text)
-        || /[=+\-*/^]/.test(text);
-}
-</script>
-
 <body>
 
   <header class="top-bar">
@@ -109,6 +15,7 @@ function detectAttempt(text) {
       <div class="top-icon">📄</div>
       <div class="top-label">Student view</div>
     </div>
+
     <div class="top-center">
       <select class="dropdown">
         <option>Class 1</option>
@@ -116,6 +23,7 @@ function detectAttempt(text) {
         <option>Class 3</option>
       </select>
     </div>
+
     <div class="top-right">
       <img src="assets/profile.png" alt="Profile" class="profile-avatar">
       <span class="profile-name">Alex Borstein</span>
@@ -126,58 +34,175 @@ function detectAttempt(text) {
     <aside class="sidebar">
       <nav>
         <a href="index.html" class="nav-item">
-          <span class="nav-icon home-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 11L12 3l9 8v8a1 1 0 0 1-1 1h-5v-5H9v5H4a1 1 0 0 1-1-1v-8Z" />
-            </svg>
-          </span>
+          <span class="nav-icon">🏠</span>
           Home
         </a>
+
         <a href="chatbot.html" class="nav-item active">
           <span class="nav-icon">💬</span>
           Chatbot
         </a>
+
         <a href="resources.html" class="nav-item">
           <span class="nav-icon">📚</span>
           Resources
         </a>
+
       </nav>
+
       <a href="teacher-dashboard.html" class="teacher-btn">
         Teacher's View
       </a>
     </aside>
+
     <main class="content">
       <div class="page-intro">
         <h1>Chatbot</h1>
         <p>Ask questions, get instant study help, and explore lessons with your AI assistant.</p>
       </div>
+
       <article class="card">
         <div class="card-title">AI Help Center</div>
-        <p class="card-text">Type in your question and let the chatbot guide you through assignments, classroom topics, and learning tips.</p>
+        <p class="card-text">
+          Type in your question and let the chatbot guide you through assignments, classroom topics, and learning tips.
+        </p>
       </article>
-          <div class="chatbox">
 
-      <div class="chat-header">Chatbot</div>
+      <div class="chatbox">
+        <div class="chat-header">Chatbot</div>
 
-      <div class="chat-messages" id="chatMessages">
-        <div class="bot">Hello! I can help after you show me your own attempt. Tell me the topic and what you've tried so far.</div>
-        <div class="user">I'm having trouble with the Pythagorean theorem.</div>
-        <div class="bot">Show me your attempt first. What formula, step, or answer have you already tried?</div>
-        <div class="user">I tried a² + b² = c², and I know the hypotenuse is the longest side.</div>
-        <div class="bot">Good start. Which sides are you using for a and b, and where does your attempt begin to feel uncertain?</div>
-        <div class="user">I used the two shorter sides, but I’m not sure why squaring them works.</div>
-        <div class="bot">That gives us a real step to work from. What do you notice when the areas built on the shorter sides are compared with the area on the longest side?</div>
-      </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="bot">
+            Hello! I'm your Socratic tutor. Share the topic you're working on and tell me what you've already tried — I'll guide you from there.
+          </div>
+        </div>
 
-      <div class="chat-input">
-        <input type="text" id="userInput" placeholder="Type a message...">
-        <button onclick="sendMessage()">Send</button>
+        <div class="chat-input">
+          <input type="text" id="userInput" placeholder="Type a message..." autocomplete="off">
+          <button id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
       </div>
     </main>
-
-
   </div>
-  </div>
+
+<script>
+  // ✅ Backend URL (your Python/Flask server)
+  const API_URL = "http://127.0.0.1:5000/chat";
+
+  const chatMessages = document.getElementById("chatMessages");
+  const userInput = document.getElementById("userInput");
+  const sendBtn = document.getElementById("sendBtn");
+
+  const conversationHistory = [];
+
+  function appendMessage(role, text) {
+    const msg = document.createElement("div");
+    msg.className = role;
+    msg.innerText = text;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function setLoading(isLoading) {
+    sendBtn.disabled = isLoading;
+    userInput.disabled = isLoading;
+    sendBtn.textContent = isLoading ? "..." : "Send";
+  }
+
+  let typingBubble = null;
+
+  function showTyping() {
+    typingBubble = document.createElement("div");
+    typingBubble.className = "bot typing-indicator";
+    typingBubble.innerHTML = "<span></span><span></span><span></span>";
+    chatMessages.appendChild(typingBubble);
+  }
+
+  function hideTyping() {
+    if (typingBubble) {
+      typingBubble.remove();
+      typingBubble = null;
+    }
+  }
+
+  async function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+
+    appendMessage("user", message);
+    userInput.value = "";
+
+    conversationHistory.push({ role: "user", content: message });
+
+    setLoading(true);
+    showTyping();
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: message,
+          history: conversationHistory
+        })
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || "Server error");
+      }
+
+      const data = await response.json();
+      const reply = data.reply;
+
+      conversationHistory.push({ role: "assistant", content: reply });
+
+      hideTyping();
+      appendMessage("bot", reply);
+
+    } catch (error) {
+      hideTyping();
+      appendMessage("bot", "⚠️ Error connecting to server.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+      userInput.focus();
+    }
+  }
+
+  userInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+</script>
+
+<style>
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 10px;
+  }
+
+  .typing-indicator span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #666;
+    animation: bounce 1.2s infinite ease-in-out;
+  }
+
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+    40% { transform: translateY(-6px); opacity: 1; }
+  }
+</style>
 
 </body>
 </html>

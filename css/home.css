@@ -1,41 +1,74 @@
 .progress-card {
   position: relative;
+  grid-area: progress;
+  display: flex;
+  flex-direction: column;
+  min-height: 292px;
+  padding-top: 18px;
 }
 
 .progress-gauge {
   position: relative;
   width: 100%;
-  height: 100px;
-  border-radius: 90px;
-  background: #e2e8f0;
+  height: 186px;
   overflow: hidden;
+  margin-top: 10px;
+  padding-top: 16px;
 }
 
-.gauge-fill {
+.gauge-arc {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 50%;
   bottom: 0;
-  width: 98%;
-  background: linear-gradient(90deg, #22c55e, #14b8a6);
-  border-radius: 90px;
+  width: 92%;
+  aspect-ratio: 2 / 1;
+  transform: translateX(-50%);
+  border-radius: 999px 999px 0 0;
+  background: conic-gradient(
+    from 180deg at 50% 100%,
+    #e9ecf6 0deg,
+    #e9ecf6 36deg,
+    #16a34a 36deg,
+    #15803d 60deg,
+    #e9ecf6 180deg
+  );
 }
 
-.progress-gauge span {
+.gauge-inner-cutout {
   position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 28px;
+  left: 50%;
+  bottom: 0;
+  width: 62%;
+  aspect-ratio: 2 / 1;
+  transform: translateX(-50%);
+  border-radius: 999px 999px 0 0;
+  background: #ffffff;
+}
+
+.gauge-center {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.gauge-center span {
+  font-size: 24px;
   font-weight: 800;
   color: #0f172a;
 }
 
 .card-note {
-  margin-top: 18px;
-  color: #0f172a;
+  margin-top: 0;
+  color: #6b7280;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  font-size: 12px;
+  letter-spacing: 0.06em;
 }
 
 .stat-card p,
@@ -51,15 +84,17 @@
   align-items: stretch;
   justify-content: center;
   min-height: 0;
+  grid-area: rings;
+  min-height: 292px;
 }
 
 .rings-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
-  gap: 18px;
+  gap: 14px;
   width: 100%;
-  min-height: 0;
+  min-height: 100%;
 }
 
 .rings-copy {
@@ -72,7 +107,7 @@
 
 .rings-copy h3 {
   margin: 0;
-  font-size: 23px;
+  font-size: 21px;
   line-height: 1.15;
   color: #0f172a;
 }
@@ -80,7 +115,7 @@
 .ring-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
   width: 100%;
   flex-shrink: 0;
 }
@@ -89,9 +124,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  min-height: 120px;
-  padding: 12px 10px;
+  gap: 6px;
+  min-height: 104px;
+  padding: 10px 8px;
   text-align: center;
   border-radius: 14px;
   background: #f8fafc;
@@ -100,8 +135,8 @@
 
 .ring-wrap {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
 }
 
 .arc-ring {
@@ -123,7 +158,7 @@
 
 .ring-hole {
   position: absolute;
-  inset: 6px;
+  inset: 5px;
   border-radius: 50%;
   background: #ffffff;
 }
@@ -134,14 +169,14 @@
 }
 
 .ring-stat strong {
-  font-size: 13px;
+  font-size: 12px;
   color: #0f172a;
   white-space: nowrap;
 }
 
 .ring-stat span {
   color: #475569;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   white-space: normal;
 }
@@ -149,7 +184,7 @@
 .ring-summary {
   margin: 0;
   color: #64748b;
-  line-height: 1.55;
+  line-height: 1.5;
   max-width: 100%;
 }
 
@@ -206,15 +241,19 @@
 .ring.green.inner { background: #22c55e; }
 
 .most-asked-card {
-  grid-column: 1 / -1;
+  grid-area: topics;
+  display: flex;
+  flex-direction: column;
+  min-height: 292px;
 }
 
 .most-asked-card .bar-list {
   display: flex;
   align-items: flex-end;
-  gap: 10px;
-  margin-top: 18px;
-  min-height: 236px;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+  min-height: 188px;
 }
 
 .bar-group {
@@ -223,7 +262,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .bar-item {
@@ -241,38 +280,38 @@
 }
 
 .bar-meta strong {
-  font-size: 12px;
+  font-size: 11px;
   color: #0f172a;
 }
 
 .bar-meta span {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   color: #64748b;
 }
 
 .bar-item.gold {
-  height: 156px;
+  height: 124px;
   background: linear-gradient(180deg, #efcf61, #e9c85a);
 }
 
 .bar-item.blue {
-  height: 180px;
+  height: 144px;
   background: linear-gradient(180deg, #5e85df, #557cda);
 }
 
 .bar-item.pink {
-  height: 196px;
+  height: 156px;
   background: linear-gradient(180deg, #f62f7a, #f52b78);
 }
 
 .bar-item.purple {
-  height: 168px;
+  height: 136px;
   background: linear-gradient(180deg, #b668f2, #a855f7);
 }
 
 .bar-item.teal {
-  height: 144px;
+  height: 116px;
   background: linear-gradient(180deg, #33c7bd, #16b5a9);
 }
 
@@ -317,6 +356,11 @@
 
 .leaderboard-card {
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.side-cards {
+  grid-area: side;
+  grid-template-columns: 1fr;
 }
 
 .leaderboard-header {
@@ -486,7 +530,7 @@
 }
 
 .graph-card {
-  grid-column: 1 / -1;
+  grid-area: graph;
   padding: 18px 18px 16px 18px;
   margin-top: 6px;
 }
@@ -512,9 +556,16 @@
 }
 
 .graph-card-wide {
-  grid-column: 1 / -1;
   margin-top: 6px;
   padding: 18px 18px 16px 18px;
+}
+
+.subject-card {
+  grid-area: subject;
+}
+
+.study-card {
+  grid-area: study;
 }
 
 .subject-grid {
@@ -609,6 +660,7 @@
 }
 
 .assignment-card {
+  grid-area: assignment;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -642,6 +694,10 @@
   display: grid;
   grid-template-columns: 1.4fr 0.95fr;
   gap: 24px;
+}
+
+.search-card {
+  grid-area: search;
 }
 
 .search-card input {
@@ -707,13 +763,14 @@
 
 @media (max-width: 1200px) {
   .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-  .bottom-grid {
-    grid-template-columns: 1fr;
-  }
-  .summary-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "progress rings"
+      "topics topics"
+      "graph graph"
+      "assignment side"
+      "search search"
+      "subject study";
   }
   .leaderboard-summary-grid {
     grid-template-columns: 1fr;
@@ -730,9 +787,16 @@
 @media (max-width: 720px) {
   .dashboard-grid {
     gap: 18px;
-  }
-
-  .summary-cards {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "progress"
+      "rings"
+      "topics"
+      "graph"
+      "assignment"
+      "search"
+      "side"
+      "subject"
+      "study";
   }
 }
