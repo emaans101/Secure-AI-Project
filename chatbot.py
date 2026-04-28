@@ -3,6 +3,8 @@ from flask_cors import CORS
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+from database import init_db
+from alerts import alerts_bp
 
 # Load .env file
 load_dotenv()
@@ -10,8 +12,14 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+# Initialize database
+init_db()
+
+# Register alerts blueprint
+app.register_blueprint(alerts_bp)
+
 # Get API key from .env
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("OPENAI_API_KEY") or "fake_key"
 
 if not api_key:
     raise ValueError("OPENAI_API_KEY not found in .env file")

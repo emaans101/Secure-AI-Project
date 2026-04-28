@@ -69,53 +69,88 @@
             <div class="card-title">Notification board</div>
             <h2>Live class alerts</h2>
           </div>
-          <span class="alert-count">5 open</span>
+          <span class="alert-count" id="alertCount">Loading...</span>
         </div>
 
-        <div class="notification-list">
-          <div class="notification-item warning">
-            <div class="notification-meta">
-              <span class="notification-type">Chatbot safety</span>
-              <span class="notification-time">2 min ago</span>
-            </div>
-            <p>Jordan M. attempted to bypass chatbot rules with repeated prompt-injection style text.</p>
-          </div>
-
-          <div class="notification-item danger">
-            <div class="notification-meta">
-              <span class="notification-type">Needs attention</span>
-              <span class="notification-time">7 min ago</span>
-            </div>
-            <p>Mia R. has asked for help 4 times in 20 minutes and appears stuck on algebra assignment 3.</p>
-          </div>
-
-          <div class="notification-item warning">
-            <div class="notification-meta">
-              <span class="notification-type">Chatbot safety</span>
-              <span class="notification-time">11 min ago</span>
-            </div>
-            <p>Leo K. requested direct final answers repeatedly without showing work attempt.</p>
-          </div>
-
-          <div class="notification-item danger">
-            <div class="notification-meta">
-              <span class="notification-type">Needs attention</span>
-              <span class="notification-time">18 min ago</span>
-            </div>
-            <p>Sofia T. gave very low-energy responses to the AI and described feeling extremely sad; this may indicate a mental health concern and needs immediate teacher follow-up.</p>
-          </div>
-
-          <div class="notification-item info">
-            <div class="notification-meta">
-              <span class="notification-type">System note</span>
-              <span class="notification-time">26 min ago</span>
-            </div>
-            <p>Frontend placeholder event stream is active. Replace static messages with backend events when API is ready.</p>
-          </div>
+        <div class="notification-list" id="notificationList">
+          <div style="padding: 20px; text-align: center; color: #999;">Loading alerts...</div>
         </div>
       </article>
     </main>
   </div>
+
+<script>
+  const API_URL = "http://127.0.0.1:5000/api/alerts";
+
+  // Function to format relative time
+  function formatTime(isoString) {
+    const date = new Date(isoString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    
+    if (diffMins < 1) return "just now";
+    if (diffMins < 60) return `${diffMins} min ago`;
+    
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+    
+    const diffDays = Math.floor(diffHours / 24);
+    return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+  }
+
+  // Function to get severity class based on alert type
+  function getSeverityClass(alertType) {
+    if (alertType === "Needs attention") return "danger";
+    if (alertType === "Chatbot safety") return "warning";
+    return "info";
+  }
+
+  // Fetch and render alerts
+  async function loadAlerts() {
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error("Failed to fetch alerts");
+      
+      const data = await response.json();
+      const alerts = data.alerts;
+      const count = data.count;
+
+      // Update alert count
+      const alertCountEl = document.getElementById("alertCount");
+      alertCountEl.textContent = `${count} open`;
+
+      // Render alerts
+      const notificationList = document.getElementById("notificationList");
+      
+      if (alerts.length === 0) {
+        notificationList.innerHTML = '<div style="padding: 20px; text-align: center; color: #999;">No alerts at this time.</div>';
+        return;
+      }
+
+      notificationList.innerHTML = alerts.map(alert => `
+        <div class="notification-item ${getSeverityClass(alert.alert_type)}">
+          <div class="notification-meta">
+            <span class="notification-type">${alert.alert_type}</span>
+            <span class="notification-time">${formatTime(alert.timestamp)}</span>
+          </div>
+          <p>${alert.student_name} — ${alert.message}</p>
+        </div>
+      `).join('');
+      
+    } catch (error) {
+      console.error("Error loading alerts:", error);
+      const notificationList = document.getElementById("notificationList");
+      notificationList.innerHTML = '<div style="padding: 20px; text-align: center; color: #f00;">Error loading alerts. Make sure the backend is running.</div>';
+    }
+  }
+
+  // Load alerts on page load
+  loadAlerts();
+
+  // Refresh alerts every 10 seconds
+  setInterval(loadAlerts, 10000);
+</script>
 
 </body>
 </html>
